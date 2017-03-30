@@ -160,7 +160,6 @@ void greet(void)
 void init(void){
 
 int count = d * d - 1;
-
 for (int i = 0; i < d; i++)
 {
     for (int j = 0; j < d; j++)
@@ -180,44 +179,33 @@ for (int i = 0; i < d; i++)
 
 }
 
-/**
- * Prints the board in its current state.
- */
+ //Prints the board in its current state.
 void draw(void)
-{
-   
+{   
    for (int i = 0; i < d; i++)
    {
     for (int j = 0; j < d; j++)
-
     {
-        //Add an space in front of the value if it is one-digit 
-        
+        //Add an space in front of the value if it is one-digit
         if (board[i][j] < 10 && board[i][j] > 0){
-          
-          printf("%2d", board[i][j]); 
-            
+            printf("%2d", board[i][j]); 
         }
         
         //Print the empty space _ instead of value 0 
-          
-          else if(board[i][j]==0)
-          
+          else if(board[i][j]==0)  
           {
           
               printf(" _");
           }
           
            //Print the rest of the values 
-          
-         else {
+         else{
              
-             printf("%d", board[i][j]);
-             
+             printf("%d", board[i][j]);   
          }
      
     }
-    printf("\n"); 
+       printf("\n"); 
    }
 }
 
@@ -226,79 +214,47 @@ void draw(void)
  * returns false. 
  */
 bool move(int tile){
-
-   
     for (int row = 0; row < d; row++)
     {
         for (int col = 0; col < d; col++)
         {
-            
             // If tile borders empty space, moves tile 
-            
-        if (board[row][col] == 0){
-            
-            // Set boundary at row 0 and swap the tile and empty space  
-            
-            if (row > 0 && board[row - 1][col] == tile)
-            
-            {
-                board[row][col] = board[row - 1][col];
+            if (board[row][col] == 0){
+                // Set boundary at row 0 and swap the tile and empty space
+                if (row > 0 && board[row - 1][col] == tile)
+                {
+                    board[row][col] = board[row - 1][col];
+                    board[row - 1][col] = 0;
+                    return true;
+                }
                 
-                board[row - 1][col] = 0;
+                // Set boundary at row d and swap the tile and empty space 
+                if (row < d - 1 && board[row + 1][col] == tile)
+                {
+                    board[row][col] = board[row + 1][col];
+                    board[row + 1][col]= 0;
+                    return true;
+                }
                 
-                return true;
+                // Set boundary at column 0 and swap the tile and empty space
+                if (col > 0 && board[row][col - 1] == tile)
+                {
+                    board[row][col] = board[row][col - 1];
+                    board[row][col-1] = 0;
+                    return true;
+                }
                 
+                // Set boundary at column d and swap the tile and empty space
+                if(col < d - 1 && board[row][col + 1] == tile)
+                {
+                    board[row][col] = board[row][col + 1];
+                    board[row][col + 1] = 0;
+                    return true;
+                }
             }
-            
-            // Set boundary at row d and swap the tile and empty space 
-            
-            if (row < d - 1 && board[row + 1][col] == tile)
-            
-            {
-                
-                board[row][col] = board[row + 1][col];
-                
-                board[row + 1][col]= 0;
-                
-                return true;
-                
-            }
-            
-            // Set boundary at column 0 and swap the tile and empty space
-            
-            if (col > 0 && board[row][col - 1] == tile)
-            
-            {
-                
-                board[row][col] = board[row][col - 1];
-                
-                board[row][col-1] = 0;
-                
-                return true;
-                
-            }
-            
-             // Set boundary at column d and swap the tile and empty space
-            
-            if (col < d - 1 && board[row][col + 1] == tile)
-            
-            {
-                board[row][col] = board[row][col + 1];
-                
-                board[row][col + 1] = 0;
-                
-                return true;
-                
-            }
-            
         }
-            
-        }
-        
     }
-    
     return false;
-    
 }
          
 
@@ -308,9 +264,7 @@ bool move(int tile){
  */
  
 bool won(void)
-
 {
-    
     int array[d * d];    
     int element;
     int count = 0;
@@ -318,8 +272,7 @@ bool won(void)
     // Prints the board as an array in its current state. 
     for (int row = 0; row < d; row++)
     {
-        for (int col = 0; col < d; col++)
-        
+        for (int col = 0; col < d; col++)       
         {
             element = board[row][col]; 
             array[count] = element;
@@ -328,8 +281,7 @@ bool won(void)
 }
     }
     
-   // Check if the array values are in an ascending order.  
-    
+    // Check if the array values are in an ascending order.  
     for (int x = 0; x < d * d - 1; x++)
     {
         if (array[x + 1] < array[x])
@@ -338,10 +290,5 @@ bool won(void)
             return false;
         }
     }
-    
     return true;
 }
-
- 
- 
-
