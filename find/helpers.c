@@ -43,10 +43,8 @@ void sort(int values[], int n){
 			{
 				int temp = values[j];
 				values[j] = values[j+1];
-        values[j+1] = temp;    
-    }   
-}
-
-}   
- 
+				values[j+1] = temp;    
+			}
+		}
+	}
 };
